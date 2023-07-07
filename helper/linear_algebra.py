@@ -31,3 +31,26 @@ def squared_distance(v: Vector, w: Vector) -> float:
 def distance(v: Vector, w: Vector) -> float:
     """Computes the distance between v and w"""
     return math.sqrt(squared_distance(v, w))
+
+def vector_sum(vectors: List[Vector]) -> Vector:
+    """Sums all corresponding elements"""
+    # Check that vectors is not empty
+    assert vectors, "no vectors provided!"
+    # Check the vectors are all the same size
+    num_elements = len(vectors[0])
+    assert all(len(v) == num_elements for v in vectors), "different sizes!"
+    # the i-th element of the result is the sum of every vector[i]
+    return [sum(vector[i] for vector in vectors)
+            for i in range(num_elements)]
+assert vector_sum([[1, 2], [3, 4], [5, 6], [7, 8]]) == [16, 20]
+
+def scalar_multiply(c: float, v: Vector) -> Vector:
+    """Multiplies every element by c"""
+    return [c * v_i for v_i in v]
+assert scalar_multiply(2, [1, 2, 3]) == [2, 4, 6]
+
+def vector_mean(vectors: List[Vector]) -> Vector:
+    """Computes the element-wise average"""
+    n = len(vectors)
+    return scalar_multiply(1/n, vector_sum(vectors))
+assert vector_mean([[1, 2], [3, 4], [5, 6]]) == [3, 4]
